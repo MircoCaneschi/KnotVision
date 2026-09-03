@@ -4,7 +4,8 @@ Custom exceptions for LocalKnot application.
 Provides a unified exception hierarchy for catching and handling specific 
 application and database errors throughout the ViewModels.
 """
-
+# (originally the app should have been named LocalKnot. It was changed in KnotVision later)
+# (I didn't care enough to find every LocalKnot reference and change them. Thus, this may happen)
 class LocalKnotError(Exception):
     """Base exception class for all LocalKnot custom exceptions."""
     pass

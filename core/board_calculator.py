@@ -12,9 +12,9 @@ class BoardCalculator:
 
     def calculate_knot_results(self, board, knots, current_knot):
         """
-        Calcola i risultati per il nodo corrente.
+        Calculate results for the current knot.
         Returns:
-            dict: Dizionario con i parametri tKnot, mKnot, tKAR, ecc.
+            dict: Dictionary with parameters tKnot, mKnot, tKAR, etc.
         """
         if not board or not current_knot or not knots:
             return self._empty_results()
@@ -119,7 +119,7 @@ class BoardCalculator:
     def _create_polygon(self, knot, board):
         poly = QPolygon()
         
-        # Mapping properties to match Java array naming
+        # Mapping properties to match Java array naming (old java reference code)
         t_z1, t_z2 = self._val(knot.side1_z1), self._val(knot.side1_z2)
         r_y1, r_y2 = self._val(knot.side2_z1), self._val(knot.side2_z2)
         b_z1, b_z2 = self._val(knot.side3_z1), self._val(knot.side3_z2)

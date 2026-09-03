@@ -49,12 +49,6 @@ class ProjectRepository:
     """
 
     def __init__(self, db_manager: DatabaseManager):
-        """
-        Initialize repository with database manager.
-
-        Args:
-            db_manager: DatabaseManager instance
-        """
         self.db = db_manager
 
     @handle_db_errors

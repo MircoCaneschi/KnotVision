@@ -101,11 +101,6 @@ class ProjectsViewModel(QObject):
         """
         super().__init__()
         self.repo = repository
-        
-        # Import Manager initialization (lazy load via property or initialized here, but it needs board_repo and knot_repo)
-        # We will receive it or pass it. Wait, ProjectsViewModel only has ProjectRepository.
-        # We can pass board_repo and knot_repo, or handle it differently.
-        # Actually, let's keep it simple and instantiate it when needed, or pass it from main.
         self._import_manager = None
 
         # Internal state
@@ -233,8 +228,6 @@ class ProjectsViewModel(QObject):
         """
         Slot called when user clicks 'Save Project' button.
         """
-        # If we are in the middle of an in-line species edit, we should save that first
-        # or at least use the text currently in the field.
         project_text = self._current_project.strip()
         species_text = self._current_species.strip()
 
@@ -274,7 +267,6 @@ class ProjectsViewModel(QObject):
                 new_name = species_text
                 
                 if old_name and old_name != new_name:
-                    # Renaming existing species
                     if self.repo.update_species(old_name, new_name):
                         self._species = [new_name if s == old_name else s for s in self._species]
                         self._species.sort()

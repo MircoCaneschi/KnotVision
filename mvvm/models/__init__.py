@@ -16,13 +16,6 @@ class Project:
     """
 
     def __init__(self, name: str, species: str):
-        """
-        Initialize a Project.
-
-        Args:
-            name: Project identifier
-            species: Species associated with the project
-        """
         self.name = name
         self.species = species
 
@@ -45,7 +38,6 @@ class Project:
         return self.name == other.name
 
     def __repr__(self):
-        """String representation of the project."""
         return f"Project(name='{self.name}', species='{self.species}')"
 
 
@@ -58,12 +50,6 @@ class Species:
     """
 
     def __init__(self, name: str):
-        """
-        Initialize a Species.
-
-        Args:
-            name: Species identifier
-        """
         self.name = name
 
     def validate_name(self, name: str) -> bool:
