@@ -2,13 +2,7 @@ from PySide6.QtWidgets import QFrame, QLabel, QGridLayout, QWidget, QSizePolicy
 from PySide6.QtGui import QPixmap, QPainter
 from PySide6.QtCore import Qt, QRect, QSize
 from PySide6.QtSvg import QSvgRenderer
-import sys
-from pathlib import Path
-
-if getattr(sys, 'frozen', False):
-    PROJECT_ROOT = Path(sys._MEIPASS)
-else:
-    PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+from core.path_utils import get_resource_path
 
 class SvgLogoWidget(QWidget):
     def __init__(self, path, parent=None):
@@ -62,7 +56,7 @@ class HeaderWidget(QFrame):
         
         # Insert the path to your vector image (.svg) here
         # Since it is not yet compiled into resources, we use the absolute path from disk!
-        icon_path = str(PROJECT_ROOT / "imgs" / "LOGPCNR.svg")
+        icon_path = str(get_resource_path("imgs/LOGPCNR.svg"))
         logo_widget = SvgLogoWidget(icon_path)
         
         title_label = QLabel("KnotVision")

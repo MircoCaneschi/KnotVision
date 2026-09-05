@@ -1,7 +1,9 @@
 import sqlite3
+import sys
 import os
 import platform
 from pathlib import Path
+from core.path_utils import get_app_data_dir
 
 
 class DatabaseManager:
@@ -13,13 +15,18 @@ class DatabaseManager:
     def _get_db_path(db_name):
         """
         Determines the database path using a hybrid approach:
-        1. Try to use a 'data' folder in the project root (Portable mode).
+        1. Try to use a 'data' folder next to the executable / in the project root (Portable mode).
         2. Fall back to the system's standard AppData/Application Support if the local path isn't writable.
         """
-        # 1. Try Local Project Path (Portable)
+        # 1. Try Local Portable Path
         try:
-            project_root = Path(__file__).resolve().parent.parent
-            local_data_dir = project_root / "data"
+            if getattr(sys, 'frozen', False):
+                # When frozen, store data next to the .exe for true portability
+                portable_root = Path(sys.executable).resolve().parent
+            else:
+                portable_root = Path(__file__).resolve().parent.parent
+                
+            local_data_dir = portable_root / "data"
             
             # Ensure directory exists
             local_data_dir.mkdir(parents=True, exist_ok=True)
@@ -33,18 +40,7 @@ class DatabaseManager:
             
         except (OSError, PermissionError):
             # 2. Fallback to System Standard Path (Standard Installation)
-            app_name = "KnotCalc"
-            
-            if platform.system() == 'Windows':
-                base_dir = Path(os.getenv('LOCALAPPDATA', os.path.expanduser('~')))
-            elif platform.system() == 'Darwin':  # macOS
-                base_dir = Path(os.path.expanduser('~/Library/Application Support'))
-            else:  # Linux/Unix
-                base_dir = Path(os.path.expanduser('~/.local/share'))
-
-            app_dir = base_dir / app_name
-            app_dir.mkdir(parents=True, exist_ok=True)
-            
+            app_dir = get_app_data_dir("KnotCalc")
             return app_dir / db_name
 
     def get_connection(self):

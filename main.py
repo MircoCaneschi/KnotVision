@@ -23,6 +23,8 @@ else:
     project_root = Path(__file__).resolve().parent
 sys.path.insert(0, str(project_root))
 
+from core.path_utils import get_resource_path, get_project_root
+project_root = get_project_root()
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import QFile, QTextStream, QIODevice
@@ -40,22 +42,22 @@ def main():
             pass
 
     app = QApplication(sys.argv)
-    icon_path = os.path.join(project_root, "imgs", "logo_DEMO.ico")
-    if not os.path.exists(icon_path):
-        icon_path = os.path.join(project_root, "imgs", "LOGPCNR.svg")
+    icon_file = get_resource_path("imgs/logo_DEMO.ico")
+    if not icon_file.exists():
+        icon_file = get_resource_path("imgs/LOGPCNR.svg")
         
-    app_icon = QIcon(icon_path)
+    app_icon = QIcon(str(icon_file))
     app.setWindowIcon(app_icon)
 
     # Apply global stylesheet directly from the filesystem
-    qss_file_path = os.path.join(project_root, "styles", "style.qss")
-    qss_file = QFile(qss_file_path)
+    qss_file_path = get_resource_path("styles/style.qss")
+    qss_file = QFile(str(qss_file_path))
     if qss_file.open(QIODevice.ReadOnly | QIODevice.Text):
         stream = QTextStream(qss_file)
         qss_content = stream.readAll()
         
         # Inject the absolute images path into the QSS
-        imgs_path = os.path.join(project_root, "imgs").replace("\\", "/")
+        imgs_path = str(get_resource_path("imgs")).replace("\\", "/")
         qss_content = qss_content.replace("{{IMGS_PATH}}", imgs_path)
         
         app.setStyleSheet(qss_content)

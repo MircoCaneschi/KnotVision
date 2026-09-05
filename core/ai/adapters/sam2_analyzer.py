@@ -1,5 +1,6 @@
 from core.ai.ai_analyzer_base import BaseAIAnalyzer
 from core.ai.ai_models import AIAnalysisResult, BoardFaceInfo, AiKnotSegment, Point2D
+from core.path_utils import get_resource_path, safe_read_image
 import torch
 import cv2
 import numpy as np
@@ -10,7 +11,7 @@ from typing import List, Tuple, Optional
 class Sam2Analyzer(BaseAIAnalyzer):
     def __init__(self, model_cfg="configs/sam2.1/sam2.1_hiera_s.yaml", model_ckpt="models/sam2.1_hiera_small.pt"):
         self.model_cfg = model_cfg
-        self.model_ckpt = model_ckpt
+        self.model_ckpt = str(get_resource_path(model_ckpt))
         self.mask_generator = None
         self.device = None
         self._use_autocast = False
@@ -35,8 +36,10 @@ class Sam2Analyzer(BaseAIAnalyzer):
         if self.mask_generator is not None:
             return
 
-        if not os.path.exists(self.model_ckpt):
-            raise FileNotFoundError(f"Model weights not found at '{self.model_ckpt}'. Please ensure they are downloaded.")
+        resolved_ckpt = get_resource_path(self.model_ckpt)
+        if not resolved_ckpt.exists():
+            raise FileNotFoundError(f"Model weights not found at '{self.model_ckpt}' (resolved as '{resolved_ckpt}'). Please ensure they are downloaded.")
+        self.model_ckpt = str(resolved_ckpt)
             
         from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
         from sam2.build_sam import build_sam2
@@ -261,7 +264,7 @@ class Sam2Analyzer(BaseAIAnalyzer):
             
         print(f"Sam2Analyzer: Analyzing {image_path} (Test Position: {test_position}mm)...")
         
-        img_bgr = cv2.imread(image_path)
+        img_bgr = safe_read_image(image_path)
         if img_bgr is None:
             raise ValueError(f"Could not read image at {image_path}")
             

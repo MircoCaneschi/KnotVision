@@ -60,14 +60,13 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("LocalKnot - MVVM Architecture")
 
-        import os
-        from pathlib import Path
         from PySide6.QtGui import QIcon
-        icon_path = str(Path(__file__).resolve().parent.parent / "imgs" / "logo_DEMO.ico")
-        if not os.path.exists(icon_path):
-            icon_path = str(Path(__file__).resolve().parent.parent / "imgs" / "LOGPCNR.svg")
-        if os.path.exists(icon_path):
-            self.setWindowIcon(QIcon(icon_path))
+        from core.path_utils import get_resource_path
+        icon_file = get_resource_path("imgs/logo_DEMO.ico")
+        if not icon_file.exists():
+            icon_file = get_resource_path("imgs/LOGPCNR.svg")
+        if icon_file.exists():
+            self.setWindowIcon(QIcon(str(icon_file)))
 
         self.resize(1000, 700)
         self._set_custom_titlebar_color()

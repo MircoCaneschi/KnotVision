@@ -5,14 +5,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QSize, Property
 from PySide6.QtGui import QPainter, QPainterPath, QColor, QPixmap, QIcon
 
-import sys
-import os
-from pathlib import Path
-
-if getattr(sys, 'frozen', False):
-    PROJECT_ROOT = Path(sys._MEIPASS)
-else:
-    PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+from core.path_utils import get_resource_path
 
 class FlaredTabButton(QPushButton):
     """A custom button that draws an outward-flared tab shape at the top.
@@ -195,7 +188,7 @@ class KnotResultsView(QWidget):
         self.toggle_results_btn = FlaredTabButton("Show parameters")
         self.toggle_results_btn.setObjectName("ResultsToggleBtn")
         self.toggle_results_btn.setFixedWidth(160)
-        icon_down = QIcon(str(PROJECT_ROOT / "imgs" / "arrow_down.svg"))
+        icon_down = QIcon(str(get_resource_path("imgs/arrow_down.svg")))
         self.toggle_results_btn.setIcon(icon_down)
         self.toggle_results_btn.clicked.connect(self._toggle_results)
         
@@ -226,7 +219,7 @@ class KnotResultsView(QWidget):
             self.anim.start()
             
             self.toggle_results_btn.setText("Show parameters")
-            icon_down = QIcon(str(PROJECT_ROOT / "imgs" / "arrow_down.svg"))
+            icon_down = QIcon(str(get_resource_path("imgs/arrow_down.svg")))
             self.toggle_results_btn.setIcon(icon_down)
         else:
             # Setup expand animation
@@ -243,7 +236,7 @@ class KnotResultsView(QWidget):
             self.anim.start()
             
             self.toggle_results_btn.setText("Hide parameters")
-            icon_up = QIcon(str(PROJECT_ROOT / "imgs" / "arrow_up.svg"))
+            icon_up = QIcon(str(get_resource_path("imgs/arrow_up.svg")))
             self.toggle_results_btn.setIcon(icon_up)
 
     def _on_animation_finished(self):
