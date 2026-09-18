@@ -70,11 +70,13 @@ class MainWindow(QMainWindow):
 
         self.resize(1000, 700)
         self._set_custom_titlebar_color()
+        self._setup_ui()
 
     def _set_custom_titlebar_color(self):
         from gui.theme_utils import set_custom_titlebar_color
         set_custom_titlebar_color(self)
         
+    def _setup_ui(self):
         self.scroll_area = FloatingScrollArea()
         self.scroll_area.setWidgetResizable(True)
         self.scroll_area.setFrameShape(QScrollArea.Shape.NoFrame)

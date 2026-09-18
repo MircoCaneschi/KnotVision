@@ -9,9 +9,6 @@ Pattern: Repository
 ├─ BoardRepository: Handles Board CRUD operations
 └─ KnotRepository: Handles Knot CRUD operations
 
-Dependencies:
-├─ core.database.DatabaseManager
-└─ core.data_models (Project, Board, Knot dataclasses)
 """
 
 import sqlite3

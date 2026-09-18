@@ -19,6 +19,7 @@ class BoardLengthView(QWidget):
         self.setMaximumHeight(80)
         
         if self.knots_vm:
+            # self.update is inherited from QWidget and calls paintEvent
             self.knots_vm.knots_changed.connect(self.update)
             self.knots_vm.current_knot_changed.connect(self.update)
             self.knots_vm.knot_data_changed.connect(self.update)

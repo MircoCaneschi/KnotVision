@@ -22,72 +22,29 @@ class ProjectsViewModel(QObject):
     """
 
     # ==================== SIGNALS ====================
-    # Emitted when the projects list changes
     projects_changed = Signal(list)
-
-    # Emitted when the species list changes
     species_changed = Signal(list)
-
-    # Emitted when project editability changes
     project_editable_changed = Signal(bool)
-
-    # Emitted when species editability changes
     species_editable_changed = Signal(bool)
-
-    # Emitted every time I click save project. Overridden if an actual error is sent
     hide_messages = Signal(bool)
-
-    # Emitted when project validation error occurs
     project_error = Signal(str)
-
-    # Emitted when species validation error occurs
     species_error = Signal(str)
-
-    # Emitted when project is successfully saved
     project_saved = Signal(str)
-
-    # Emitted when species is successfully added
     species_added = Signal(str)
-
-    # Emitted when current species changes
     current_species_changed = Signal(str)
-
-    # Emitted when a species is updated (old_name, new_name)
     species_updated = Signal(str, str)
-
-    # Emitted when current project changes
     current_project_changed = Signal(str)
-
-    # Emitted when entering or leaving project modification mode
     project_modify_mode = Signal(bool)
-
-    # Emitted to enable or disable the species combo box (interaction)
     species_enabled_changed = Signal(bool)
-
-    # Emitted to signal species management mode (Normal=True, In-Line=False)
     species_normal_mode_changed = Signal(bool)
-
-    # Emitted to enable/disable specific species actions
     species_add_enabled = Signal(bool)
     species_modify_enabled = Signal(bool)
     species_delete_enabled = Signal(bool)
-
-    # Emitted to enable or disable the save button
     save_enabled_changed = Signal(bool)
-
-    # Emitted to enable or disable navigation buttons (New, Modify, Delete)
     navigation_enabled_changed = Signal(bool)
-
-    # Emitted when export is requested by the user
     export_requested = Signal()
-
-    # Emitted when an export error occurs
     export_error = Signal(str)
-    
-    # Emitted when an export succeeds
     export_success = Signal(str)
-
-    # Emitted when import succeeds or fails
     import_success = Signal(str)
     import_error = Signal(str)
 
